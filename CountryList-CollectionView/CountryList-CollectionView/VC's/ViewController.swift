@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         }
     }
     
-    var searchQuery = "philippines" {
+    var searchQuery = "united" {
         didSet {
             loadData(search: searchQuery)
         }
