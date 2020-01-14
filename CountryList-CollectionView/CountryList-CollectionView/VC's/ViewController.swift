@@ -21,7 +21,11 @@ class ViewController: UIViewController {
         }
     }
     
-    var searchQuery = "united"
+    var searchQuery = "philippines" {
+        didSet {
+            loadData(search: searchQuery)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +36,15 @@ class ViewController: UIViewController {
         view.backgroundColor = .lightGray
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let detailVC = segue.destination as? DetailViewController, let indexPath = collectionView.indexPathsForSelectedItems!.first else {
+            return
+        }
+        detailVC.countryDetail = country[indexPath.row]
+    }
+    
     func loadData(search: String) {
-        CountryAPIClient.getCountries(for: searchQuery.lowercased()) { (result) in
+        CountryAPIClient.getCountries(for: search) { (result) in
             switch result {
             case .failure(let appError):
                 print("\(appError)")
@@ -81,7 +92,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
 
 extension ViewController: UISearchBarDelegate {
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let searchText = searchBar.text else {
             print("missing search text")
             return

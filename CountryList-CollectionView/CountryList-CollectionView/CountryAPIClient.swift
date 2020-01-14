@@ -12,7 +12,7 @@ import NetworkHelper
 struct CountryAPIClient {
     static func getCountries(for searchQuery: String, completion: @escaping (Result<[Country], AppError>) -> ()) {
         
-//        let searchQuery = searchQuery.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "ecuador"
+        let searchQuery = searchQuery.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "ecuador"
         
         let endpointURL = "https://restcountries.eu/rest/v2/name/\(searchQuery.lowercased())"
         
